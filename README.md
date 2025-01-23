@@ -29,6 +29,10 @@ python main.py
 
 [https://www.ravi.cool/archives/11.html](https://www.ravi.cool/archives/11.html)
 
+## 赞助
+
+[<img src="https://api.gitsponsors.com/api/badge/img?id=914794774" height="90">](https://api.gitsponsors.com/api/badge/link?p=ZTMi6A+dCJ/VgQzfcNipsrs/JqA3nIHHptI8d7hU4XjzUW02Y0wVF+wqwAxAtL+bbAQc3YO12NwxUJCi7OBKPqdYGBQ+aOj/uRkz5cKO9dxidoheKj3Eb1H3JBhIcdwbpJKZDio4VkvOKJNZVKUcSQ==)
+
 ## 开源协议
 
 本项目基于AGPL-3.0协议开源，请自觉遵守。
