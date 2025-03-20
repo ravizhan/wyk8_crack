@@ -38,22 +38,34 @@ def decompile():
                 remove(name)
 
 if __name__ == '__main__':
-    file_path = input(r"请输入程序安装路径(C:\WYKS2Python)：")
-    with open(path.join(file_path, "Register.UI.dll"), "rb") as f:
-        file_data = f.read()
-    with open(path.join(file_path, "Exam.exe"), "rb") as f:
-        key = md5(f.read()).digest()
-    with open("./Register.UI.dec.dll", "wb") as f:
-        f.write(decrypt_file(file_data, key))
-    print("解密完成, 开始补丁")
-    decompile()
-    with open("./Register.UI.dll", "wb") as f:
-        with open("./Register.UI.modified.dll", "rb") as f2:
-            f.write(encrypt_file(f2.read(), key))
-    rename(path.join(file_path, "Register.UI.dll"), path.join(file_path, "Register.UI.dll.bak"))
-    copyfile("./Register.UI.dll", path.join(file_path, "Register.UI.dll"))
-    print("补丁完成")
-    remove("./Register.UI.dec.dll")
-    remove("./Register.UI.modified.dll")
-    remove("./Register.UI.dll")
-    input("按任意键退出...")
+    try:
+        file_path = input(r"请输入程序安装路径(C:\WYKS2Python)：")
+        with open(path.join(file_path, "Register.UI.dll"), "rb") as f:
+            file_data = f.read()
+        if path.exists(path.join(file_path, "Register.UI.dll.bak")):
+            with open(path.join(file_path, "Register.UI.dll.bak"), "rb") as f:
+                file_data_bak = f.read()
+            if md5(file_data).hexdigest() == md5(file_data_bak).hexdigest():
+                remove(path.join(file_path, "Register.UI.dll.bak"))
+            else:
+                print("检测到文件已修改，可能已破解")
+                input("按任意键退出...")
+        with open(path.join(file_path, "Exam.exe"), "rb") as f:
+            key = md5(f.read()).digest()
+        with open("./Register.UI.dec.dll", "wb") as f:
+            f.write(decrypt_file(file_data, key))
+        print("解密完成, 开始补丁")
+        decompile()
+        with open("./Register.UI.dll", "wb") as f:
+            with open("./Register.UI.modified.dll", "rb") as f2:
+                f.write(encrypt_file(f2.read(), key))
+        rename(path.join(file_path, "Register.UI.dll"), path.join(file_path, "Register.UI.dll.bak"))
+        copyfile("./Register.UI.dll", path.join(file_path, "Register.UI.dll"))
+        print("补丁完成")
+        remove("./Register.UI.dec.dll")
+        remove("./Register.UI.modified.dll")
+        remove("./Register.UI.dll")
+        input("按任意键退出...")
+    except Exception as e:
+        print(e)
+        input("出现错误，按任意键退出...")
