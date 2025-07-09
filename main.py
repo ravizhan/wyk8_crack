@@ -40,7 +40,7 @@ def patch(filename):
 if __name__ == '__main__':
     try:
         file_path = input(r"请输入程序安装路径(C:\WYKS2Python)：")
-        if path.exists(path.join(file_path, "Register.UI.dec.dll")):
+        if path.exists(path.join(file_path, "Register.UI.dll")):
             with open(path.join(file_path, "Register.UI.dll"), "rb") as f:
                 file_data = f.read()
             if path.exists(path.join(file_path, "Register.UI.dll.bak")):
@@ -49,8 +49,7 @@ if __name__ == '__main__':
                 if md5(file_data).hexdigest() == md5(file_data_bak).hexdigest():
                     remove(path.join(file_path, "Register.UI.dll.bak"))
                 else:
-                    print("检测到文件已修改，可能已破解")
-                    input("按任意键退出...")
+                    print("检测到文件已被修改，可能已破解")
             with open(path.join(file_path, "Exam.exe"), "rb") as f:
                 key = md5(f.read()).digest()
             with open("./Register.UI.dec.dll", "wb") as f:
@@ -66,7 +65,6 @@ if __name__ == '__main__':
             remove("./Register.UI.dec.dll")
             remove("./Register.UI.modified.dll")
             remove("./Register.UI.dll")
-            input("按任意键退出...")
         elif path.exists(path.join(file_path, "Wuyou.Exam.Encrypt.dll")):
             with open(path.join(file_path, "Wuyou.Exam.Encrypt.dll"), "rb") as f:
                 file_data = f.read()
@@ -76,8 +74,7 @@ if __name__ == '__main__':
                 if md5(file_data).hexdigest() == md5(file_data_bak).hexdigest():
                     remove(path.join(file_path, "Wuyou.Exam.Encrypt.dll.bak"))
                 else:
-                    print("检测到文件已修改，可能已破解")
-                    input("按任意键退出...")
+                    print("检测到文件已被修改，可能已破解")
             with open(path.join(file_path, "Exam.exe"), "rb") as f:
                 key = md5(f.read()).digest()
             with open("./Wuyou.Exam.Encrypt.dec.dll", "wb") as f:
@@ -93,7 +90,11 @@ if __name__ == '__main__':
             remove("./Wuyou.Exam.Encrypt.dec.dll")
             remove("./Wuyou.Exam.Encrypt.modified.dll")
             remove("./Wuyou.Exam.Encrypt.dll")
-            input("按任意键退出...")
+        else:
+            print("未找到目标文件")
+            print("请确认：1. 安装路径是否正确;    2. 程序是否完整安装")
     except Exception as e:
         print(e)
-        input("出现错误，按任意键退出...")
+        print("处理过程中出错，未完成补丁")
+    
+    input("按任意键退出...")
