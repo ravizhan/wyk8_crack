@@ -40,7 +40,7 @@ def patch(filename):
 if __name__ == '__main__':
     try:
         file_path = input(r"请输入程序安装路径(C:\WYKS2Python)：")
-        if path.exists(path.join(file_path, "Register.UI.dec.dll")):
+        if path.exists(path.join(file_path, "Register.UI.dll")):
             with open(path.join(file_path, "Register.UI.dll"), "rb") as f:
                 file_data = f.read()
             if path.exists(path.join(file_path, "Register.UI.dll.bak")):
