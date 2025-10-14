@@ -27,7 +27,7 @@ python main.py
 
 ## 破解原理
 
-**[https://www.ravi.cool/archives/11.html](https://www.ravi.cool/archives/11.html)**
+**[https://www.ravi.cool/post/wyk8-crack.html](https://www.ravi.cool/post/wyk8-crack.html)**
 
 ## 开源协议
 
