@@ -54,7 +54,7 @@ if __name__ == '__main__':
                 key = md5(f.read()).digest()
             decrypted_data = decrypt_file(file_data, key)
             if not decrypted_data.startswith(b'MZ'):
-                print("解密失败: 生成的文件无效。可能是 Exam.exe 版本不匹配。")
+                print("解密失败: 生成的文件无效。")
                 input("按任意键退出...")
                 exit(1)
             
@@ -85,7 +85,7 @@ if __name__ == '__main__':
                 key = md5(f.read()).digest()
             decrypted_data = decrypt_file(file_data, key)
             if not decrypted_data.startswith(b'MZ'):
-                print("解密失败: 生成的文件无效。可能是 Exam.exe 版本不匹配。")
+                print("解密失败: 生成的文件无效。")
                 input("按任意键退出...")
                 exit(1)
             
