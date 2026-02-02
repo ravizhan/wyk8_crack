@@ -52,8 +52,14 @@ if __name__ == '__main__':
                     print("检测到文件已被修改，可能已破解")
             with open(path.join(file_path, "Exam.exe"), "rb") as f:
                 key = md5(f.read()).digest()
+            decrypted_data = decrypt_file(file_data, key)
+            if not decrypted_data.startswith(b'MZ'):
+                print("解密失败: 生成的文件无效。")
+                input("按任意键退出...")
+                exit(1)
+            
             with open("./Register.UI.dec.dll", "wb") as f:
-                f.write(decrypt_file(file_data, key))
+                f.write(decrypted_data)
             print("解密完成, 开始补丁")
             patch("Register.UI")
             with open("./Register.UI.dll", "wb") as f:
@@ -77,8 +83,14 @@ if __name__ == '__main__':
                     print("检测到文件已被修改，可能已破解")
             with open(path.join(file_path, "Exam.exe"), "rb") as f:
                 key = md5(f.read()).digest()
+            decrypted_data = decrypt_file(file_data, key)
+            if not decrypted_data.startswith(b'MZ'):
+                print("解密失败: 生成的文件无效。")
+                input("按任意键退出...")
+                exit(1)
+            
             with open("./Wuyou.Exam.Encrypt.dec.dll", "wb") as f:
-                f.write(decrypt_file(file_data, key))
+                f.write(decrypted_data)
             print("解密完成, 开始补丁")
             patch("Wuyou.Exam.Encrypt")
             with open("./Wuyou.Exam.Encrypt.dll", "wb") as f:
