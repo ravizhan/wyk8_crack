@@ -23,13 +23,22 @@ def encrypt_file(file_data: bytes, key: bytes) -> bytes:
 def patch(filename):
     if not path.exists("temp"):
         mkdir("temp")
-    run(["./tools/ildasm.exe", "/UTF8", f"./{filename}.dec.dll", f"/OUT=./temp/{filename}.il", "/NOBAR"])
-    with open(f"./temp/{filename}.il", "r+", encoding="utf-8") as f:
+    run(["./tools/ildasm.exe", f"./{filename}.dec.dll", f"/OUT=./temp/{filename}.il", "/NOBAR"])
+    with open(f"./temp/{filename}.il", "rb") as f:
+        encoding = ["ASCII","cp1252","latin-1","utf-8","gbk"]
         content = f.read()
-        content = content.replace("ldsfld     bool Wuyou.Exam.Encrypt.PersionVersionEncryptModuleEntry::'<IsActivation>k__BackingField'", "ldc.i4.1")
-        f.seek(0)
-        f.truncate()
-        f.write(content)
+        for enc in encoding:
+            try:
+                content = content.decode(enc)
+                content = content.replace(
+                    "ldsfld     bool Wuyou.Exam.Encrypt.PersionVersionEncryptModuleEntry::'<IsActivation>k__BackingField'",
+                    "ldc.i4.1")
+                print(f"成功使用{enc}解码")
+                break
+            except:
+                continue
+    with open(f"./temp/{filename}.il", "wb") as f:
+        f.write(content.encode("utf-8"))
     run(["./tools/ilasm.exe", "/DLL", "/QUIET", f"/OUTPUT={filename}.modified.dll", f"./temp/{filename}.il"])
     rmtree("./temp")
     for _,_, files in walk("./"):
@@ -57,7 +66,7 @@ if __name__ == '__main__':
                 print("解密失败: 生成的文件无效。")
                 input("按任意键退出...")
                 exit(1)
-            
+
             with open("./Register.UI.dec.dll", "wb") as f:
                 f.write(decrypted_data)
             print("解密完成, 开始补丁")
@@ -108,5 +117,4 @@ if __name__ == '__main__':
     except Exception as e:
         print(e)
         print("处理过程中出错，未完成补丁")
-    
     input("按任意键退出...")
