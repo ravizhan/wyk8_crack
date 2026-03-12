@@ -5,6 +5,6 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "cryptography>=46.0.4",
-    "nuitka>=4.0",
+    "cryptography>=46.0.5",
+    "nuitka>=4.0.5",
 ]

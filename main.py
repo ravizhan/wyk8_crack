@@ -12,11 +12,12 @@ def decrypt_file(file_data: bytes, key: bytes) -> bytes:
     decrypted_data = decryptor.update(file_data) + decryptor.finalize()
     return decrypted_data
 
+
 def encrypt_file(file_data: bytes, key: bytes) -> bytes:
     padding_data = md5(file_data).digest()
     cipher = Cipher(algorithms.AES128(key), modes.ECB())
     encryptor = cipher.encryptor()
-    encrypted_data = encryptor.update(file_data+padding_data) + encryptor.finalize()
+    encrypted_data = encryptor.update(file_data + padding_data) + encryptor.finalize()
     return encrypted_data
 
 
@@ -25,7 +26,7 @@ def patch(filename):
         mkdir("temp")
     run(["./tools/ildasm.exe", f"./{filename}.dec.dll", f"/OUT=./temp/{filename}.il", "/NOBAR"])
     with open(f"./temp/{filename}.il", "rb") as f:
-        encoding = ["ASCII","cp1252","latin-1","utf-8","gbk"]
+        encoding = ["ASCII", "cp1252", "latin-1", "utf-8", "gbk"]
         content = f.read()
         for enc in encoding:
             try:
@@ -38,13 +39,14 @@ def patch(filename):
             except:
                 continue
     with open(f"./temp/{filename}.il", "wb") as f:
-        f.write(content.encode("utf-8"))
+        f.write(content.encode(enc))
     run(["./tools/ilasm.exe", "/DLL", "/QUIET", f"/OUTPUT={filename}.modified.dll", f"./temp/{filename}.il"])
     rmtree("./temp")
-    for _,_, files in walk("./"):
+    for _, _, files in walk("./"):
         for name in files:
             if name.endswith('.resources'):
                 remove(name)
+
 
 if __name__ == '__main__':
     try:
@@ -97,7 +99,7 @@ if __name__ == '__main__':
                 print("解密失败: 生成的文件无效。")
                 input("按任意键退出...")
                 exit(1)
-            
+
             with open("./Wuyou.Exam.Encrypt.dec.dll", "wb") as f:
                 f.write(decrypted_data)
             print("解密完成, 开始补丁")
