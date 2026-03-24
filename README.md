@@ -34,3 +34,6 @@ python main.py
 本项目基于AGPL-3.0协议开源，请自觉遵守。
 
 使用本项目产生的任何法律后果与本人无关。
+
+## THANKS
+ilasm & ildasm FROM [https://github.com/3F/coreclr](https://github.com/3F/coreclr)
